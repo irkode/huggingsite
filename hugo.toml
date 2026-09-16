@@ -1,0 +1,26 @@
+# Hugginface default theme config
+
+[params]
+   [params.huggingsite]
+      # maybe a map here if we need more browser storage stuff
+      storageKey = "huggingsite-theme"
+      siteLogo   = "img/huggingsite_logo-48x48.png"
+      [params.huggingsite.images]
+         overlay = "img/highlightjs-icon.png"
+         site    = "img/huggingsite-1254x1254.png"
+         error   = "img/huggingsite_404-1254x1254.png"
+      [params.huggingsite.markup]
+         enableHighlightJS = true
+         chromaStyle       = "monokai"
+         # language fallback settings
+         #  language        a language chroma can render
+         #  hljs            autodetect with highlightjs
+         # hljs-pass-language   pass language to highlightjs
+         #fallbackEmpty   = "hljs"
+         #fallbackUnknown = "hljs-hugo-html"
+
+[module]
+   [module.hugoVersion]
+      extended = false
+      min = '0.166.0'
+      max = '0.166.0'

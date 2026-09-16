@@ -1,0 +1,49 @@
+{{- define "main" }}
+<div class="headline banner">
+	<div>
+		{{- $teaser := partial "img/overlay.html" (dict "image" site.Params.huggingsite.images.site "size" 128) }}
+		<img class="img128" src="{{ $teaser.RelPermalink }}" alt="" />
+	</div>
+	<aside>
+		<h1>{{ site.Params.Description }}</h1>
+	</aside>
+</div>
+
+{{- .Store.Set "loadHighlightJS" true -}}
+
+<div class="twocols r1000">
+	<div>
+		<figure>
+			<figcaption>Hugo-Html</figcaption>
+			<div class="highlight hljs-discourse"><pre tabindex="0"><code class="hljs-hugo-html">
+						{{- `{{ printf "discourse Hello %s -> %s" $World .}}
+{{- /*  just a simple comment */ -}}
+<div class="help"/>
+{{ range $k, $v := hugo.Generator $ $.Method -}}
+{{ site.Language.Label }}
+{{ hugo.Sites.Pages }}
+` -}}
+					</code>{{- /**/ -}}
+				</pre>
+			</div>
+		</figure>
+	</div>
+	<aside>
+		<figure>
+			<figcaption>Discourse standard</figcaption>
+			<div class="highlight hljs-discourse"><pre tabindex="0"><code class="python">
+						{{- `{{ printf "discourse Hello %s -> %s" $World .}}
+{{- /*  just a simple comment */ -}}
+<div class="help"/>
+{{ range $k, $v := hugo.Generator $ $.Method -}}
+{{ site.Language.Label }}
+{{ hugo.Sites.Pages }}
+` -}}
+					</code>{{- /**/ -}}
+				</pre>
+			</figure>
+		</aside>
+	</div>
+
+	{{- .Content }}
+{{- end }}
