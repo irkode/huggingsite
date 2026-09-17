@@ -1,0 +1,12 @@
+{{- define "main" }}
+<div class="headline banner">
+	<div>
+		{{- $teaser := partial "img/overlay.html" (dict "image" site.Params.huggingsite.images.site "size" 84) }}
+		<img class="img84" src="{{ $teaser.RelPermalink }}" alt="" />
+	</div>
+	<aside>
+		<h1>{{- .Title }}</h1>
+	</aside>
+</div>
+{{- .Content }}
+{{- end }}

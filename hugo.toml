@@ -1,4 +1,5 @@
 # Hugginface default theme config
+title = "HuggingSite"
 
 [params]
    [params.huggingsite]

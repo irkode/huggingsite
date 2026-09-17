@@ -1,0 +1,95 @@
+@media (max-width: 580px) {
+  body {
+    grid-template-columns: 4px 1fr 4px;
+  }
+
+  .site-header {
+    padding: 2px;
+    gap: 0.4rem;
+  }
+
+  .menu-button {
+    padding: 0.2em 0.55em;
+    font-size: 0.8rem;
+    letter-spacing: 0;
+    margin-inline-end: 3px;
+  }
+
+  .header-right {
+    gap: 0.3rem;
+  }
+
+  .header-left {
+    gap: 0.3rem;
+  }
+
+  /* show burger label */
+  #burger-label {
+    display: flex;
+  }
+
+  /* keyboard-reachable burger: hidden but focusable (not display:none) */
+  #burger-toggle {
+    display: inline-block;
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    clip-path: inset(50%);
+  }
+  #burger-toggle:focus-visible + #burger-label {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
+
+  /* hide main menu by default, position below header-center */
+  #main-menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    flex-direction: column;
+    background-color: var(--accent-bg);
+    border: 1.5px solid var(--menu-button-bg);
+    box-shadow: var(--menu-shadow--hover);
+    z-index: 200;
+    min-width: max-content;
+  }
+
+  /* open main menu when burger is checked */
+  .header-center:has(#burger-toggle:checked) #main-menu {
+    display: flex;
+  }
+
+  /* main menu items full width */
+  #main-menu > .menu-item > .menu-button {
+    display: flex;
+    justify-content: flex-start;
+    width: 100%;
+    margin-inline-end: 0;
+    border: none;
+    text-align: left;
+    border-bottom: 1px solid color-mix(in srgb, var(--menu-button-bg) 25%, transparent);
+    box-shadow: none;
+  }
+  #main-menu > .menu-item {
+    width: 100%;
+  }
+  /* mobile: arrow right */
+  .menu-item:has(.submenu) > .menu-button::after {
+    content: " ▸";
+  }
+
+  #main-menu > .menu-item:last-child > .menu-button {
+    border-bottom: none;
+  }
+
+  /* submenus open to the right */
+  .submenu {
+    top: 0;
+    left: 100%;
+  }
+}

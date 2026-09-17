@@ -1,0 +1,124 @@
+.headline,
+.twocols {
+   display: flex;
+   width: 100%;
+   gap: 12px;
+   margin-bottom: 1rem;
+   align-items: stretch;
+}
+
+/* =========================================================
+   TWOCOLS: equal columns
+   ========================================================= */
+.twocols > * {
+   flex: 1 1 0;
+   min-width: 0;
+}
+
+/* =========================================================
+   CENTER: compact grouping, no edge push
+   ========================================================= */
+.headline.center {
+   justify-content: flex-start;
+   align-items: center;
+}
+
+/* both items stay content-sized */
+.headline.center > * {
+   flex: 0 0 auto;
+}
+
+/* center text inside right slot */
+.headline.center > :nth-child(2) {
+   text-align: center;
+}
+
+/* =========================================================
+   BANNER: left fixed, right expands
+   ========================================================= */
+.headline.banner {
+   align-items: center;
+}
+
+.headline.banner > :first-child {
+   flex: 0 0 auto;
+}
+
+.headline.banner > :nth-child(2) {
+   flex: 1 1 auto;
+   text-align: left;
+   min-width: 0;
+}
+
+/* =========================================================
+   IMAGES (unchanged utilities)
+   ========================================================= */
+.headline .img192 {
+   width: 192px;
+   flex: 0 0 192px;
+   object-fit: cover;
+}
+
+.headline .img128 {
+   width: 128px;
+   flex: 0 0 128px;
+   object-fit: cover;
+}
+
+.headline .img84 {
+   width: 84px;
+   flex: 0 0 84px;
+   object-fit: cover;
+}
+
+/* =========================================================
+   TYPOGRAPHY INSIDE ASIDE
+   (optional global styling, keep if desired)
+   ========================================================= */
+.headline h1 {
+   margin: 0;
+   padding: 0;
+}
+.headline h2 {
+   text-align: center;
+}
+
+.headline p {
+   text-align: center;
+   line-height: 2em;
+}
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+@media (max-width: 1000px) {
+   .twocols.r1000 {
+      flex-direction: column;
+      align-items: stretch;
+   }
+}
+
+@media (max-width: 580px) {
+   .headline,
+   .twocols {
+      flex-direction: column;
+      align-items: stretch;
+   }
+
+   .headline .img192 {
+      width: 128px;
+      flex: 0 0 128px;
+   }
+   .headline .img128 {
+      width: 96px;
+      flex: 0 0 96px;
+   }
+
+   body.no-hl_img-mobile .headline img {
+      display: none;
+   }
+
+   body.no-hl_img-mobile .headline.banner {
+      align-items: flex-start;
+   }
+}

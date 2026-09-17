@@ -7,7 +7,7 @@
 	{{- warnf "[%04d][ %-20s ] : %s" $idx $tpl $pagePath }}
 {{- end }}
 {{ $tag := or site.Params.Tag "unreleased" }}
-{{ $buildDate := or site.Params.BuildDate ((. | time.AsTime).Format "2006-01-02") }}
+{{ $buildDate := or site.Params.BuildDate (time.AsTime "2006-01-02") }}
 <!doctype html>
 <html lang="{{ site.Language.Locale }}" dir="{{ or site.Language.Direction `ltr` }}">
 	<head>
