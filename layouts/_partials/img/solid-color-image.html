@@ -1,10 +1,12 @@
-{{- /* layouts/partials/solid-color-image.html
+{{- /* 
+   .Synopsis
+   Create a one color rectangle image
+
    Usage: {{ $img := partial "solid-color-image.html" (dict "color" "3A5A8E" "width" 1200 "height" 630 "format" "png") }}
    Usage: {{ $img := partial "solid-color-image.html" (slice COLOR [WIDTH] [HEIGHT] [FORMAT]) }}
-   Usage: {{ $img := partial "solid-color-image.html" COLOR }} 1x1 
+   Usage: {{ $img := partial "solid-color-image.html" COLOR }} 1x1
    Usage: {{ $img := partial "solid-color-image.html" }} <- 1x1 white
 */ -}}
-{{ $c := math.Counter }}
 {{- $color := "FFFFFF" }}
 {{- $width := 1 }}
 {{- $height := 1 }}

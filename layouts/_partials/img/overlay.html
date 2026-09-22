@@ -1,33 +1,43 @@
+{{- /*
+   apply an overlay to given image
+
+   parameters: DICT
+   - image: the image to overlay
+   - overlay: the image used to overlay
+   - size: the target size of the result image
+   - type: initialize values from params.huggingsite.images.type
+*/ -}}
+
 {{- $opts := . }}
-{{- $overlayPath := or (index $opts "overlay") site.Params.huggingsite.images.overlay }}
-{{- $imagePath := index $opts "image" }}
-{{- $tileSize := div (or (index $opts "size") 192) 4 }}
-{{- $imageSizeString := string (mul 4 $tileSize) }}
-{{- $overlay := "" }}
-{{- with resources.Get $overlayPath }}
-	{{- with .Resize (printf "%dx" $tileSize) }}
-		{{ $overlay = images.Overlay . 0 (mul 3 $tileSize) }}
+{{- with $opts.type }}
+	{{- with index site.Params.huggingsite.images . }}
+		{{- $opts = merge . $opts }}
 	{{- else }}
-		{{- errorf "resize overlay image failed: [ %q ]" $overlayPath }}
-	{{ end }}
-{{- else }}
-	{{- warnf "overlay image not found [ %q ]" $overlayPath }}
+		{{- errorf "unknown site image definition '%s'" . }}
+	{{- end }}
 {{- end }}
-{{- $image := resources.Get $imagePath }}
-{{- with $image }}
-	{{- with .Resize (add $imageSizeString "x") }}
-		{{ if $overlay }}
-			{{ with .Filter $overlay }}
-				{{- $image = . }}
+{{- with $image := resources.Get $opts.image }}
+	{{- $imageSize := or $opts.size $image.Width }}
+	{{- with $image = .Resize (printf "%dx" $imageSize) }}
+		{{- with resources.Get $opts.overlay }}
+			{{- $tileSize := div $imageSize 2 }}
+			{{- with .Resize (printf "%dx" $tileSize) }}
+				{{ with images.Overlay . 0 $tileSize }}
+					{{- return $image.Filter . }}
+				{{- else }}
+					{{- errorf "apply overlay failed for: [ %q ]" $opts.image }}
+				{{- end }}
 			{{- else }}
-				{{- warnf "apply overlay failed for: [ %q ]" $image }}
-			{{- end }}
+				{{- errorf "resize overlay image failed: [ %q ]" $opts.overlay }}
+			{{ end }}
+		{{- else }}
+			{{- warnf "overlay image not found [ %q ]" $opts.overlay }}
 		{{- end }}
+		{{- return . }}
 	{{- else }}
-		{{- errorf "resize teaser image failed: [ %q ]" $image }}
+		{{- errorf "image resize failed [ %q ]" $opts.image }}
 	{{- end }}
 {{- else }}
-	{{- errorf "teaser image not found [ %q ]" $imagePath }}
+	{{- errorf "image not found [ %q ]" $opts.image }}
 {{- end }}
-{{- return $image }}
 {{- /**/ -}}

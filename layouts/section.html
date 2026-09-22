@@ -1,12 +1,20 @@
 {{- define "main" }}
 <div class="headline banner">
 	<div>
-		{{- $teaser := partial "img/overlay.html" (dict "image" site.Params.huggingsite.images.site "size" 84) }}
-		<img class="img84" src="{{ $teaser.RelPermalink }}" alt="" />
+		{{- with partialCached "img/overlay.html" (dict "type" "site" "size" 128) "site" 128 }}
+			<img class="img{{ .Width }}" src="{{ .RelPermalink }}" alt="" />
+		{{- end }}
 	</div>
 	<aside>
 		<h1>{{- .Title }}</h1>
 	</aside>
 </div>
+<ul>
+	{{- range .RegularPagesRecursive }}
+		<li><a href="{{ .RelPermalink }}">{{- with .Title }}{{ . }}{{ else }}{{ .Path }}{{ end -}}</a>
+			<p>{{ .Params.excerpt }}</p>
+		</li>
+	{{- end }}
+</ul>
 {{- .Content }}
 {{- end }}

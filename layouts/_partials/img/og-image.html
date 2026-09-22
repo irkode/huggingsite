@@ -1,4 +1,4 @@
-{{- $ogImage := partialCached "img/overlay.html" (dict "image" site.Params.huggingsite.images.site "size" 440) }}
+{{- $ogImage := partialCached "img/overlay.html" (dict "type" "site" "size" 440) "site" 440 }}
 {{- $ogText := partialCached "img/solid-color-image.html" (slice "#976941" 760 440) }}
 
 {{- $fontPath := "fonts/ArchivoBlack-Regular.ttf" }}
@@ -53,7 +53,7 @@
 	(images.Padding 0 760 0 0 "#976941")
 	(images.Padding 95 0 95 0 "#ebb951")
 	(images.Overlay $ogText 441 95)
-	(images.Text site.Title $optsTitle)
+	(images.Text (or site.Title "Oops! Site.Title not set") $optsTitle)
 	(images.Text site.Home.Permalink $optsURL)
 }}
 {{- return ($ogImage | images.Filter $filter | resources.Copy "img/og-image.png") }}

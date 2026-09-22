@@ -1,24 +1,16 @@
-{{- $tpl := templates.Current.Name }}
-{{- $idx := math.Counter }}
-{{- warnf "[%04d][ %-20s ] : %s " $idx $tpl .Path }}
 {{- $opts := dict
 	"targetPath" "/css/huggingsite.css"
 	"loaders" (dict ".svg" "dataurl")
 }}
 
-{{- with resources.Get "css/huggingsite.css" }}
-	{{- warnf "[%04d][ %-20s ] : %s :: LOAD %s" $idx $tpl $.Path . }}
-	{{- with . | css.Build $opts }}
-		<link rel="stylesheet" href="{{ .RelPermalink }}" />
+{{- with "css/huggingsite.css" }}
+	{{- with resources.Get . }}
+		{{- with . | css.Build $opts }}
+			<link rel="stylesheet" href="{{ .RelPermalink }}" />
+		{{- else }}
+			{{- warnf "css.Build for %s failed" . }}
+		{{- end }}
 	{{- else }}
-		{{- warnf "css.Build for %s failed" . }}
+		{{- errorf "[ %s ] : asset not found: %s" templates.Current.Name . }}
 	{{- end }}
-{{- else }}
-	{{- warnf "CSS not found: css/huggingsite.css" }}
 {{- end }}
-
-{{- /*
-{{- range slice (or site.Params.huggingsite.markup.chromaStyle "monokai") "hugodocs" }}
-	{{- partialCached "load-chromastyle.html" . . }}
-{{- end -}}
-*/ -}}

@@ -1,8 +1,9 @@
 {{- define "main" }}
-{{- $teaser := partial "img/overlay.html" (dict "image" site.Params.huggingsite.images.error) }}
 <article class="headline center">
 	<div class="main">
-		<img class="img192" src="{{ $teaser.RelPermalink }}" alt=""/>
+		{{- with partialCached "img/overlay.html" (dict "type" "error") "error" }}
+			<img class="img{{ .192 }}" src="{{ .RelPermalink }}" alt="404 error image"/>
+		{{- end }}
 	</div>
 	<aside>
 		<h1>404 Page not Found</h1>

@@ -1,24 +1,20 @@
-{{- $tpl := templates.Current.Name }}
-{{- $idx := math.Counter }}
-{{- warnf "[%04d][ %-20s ] : %s " $idx $tpl .Path }}
 {{- $storageKey := default "huggingsite-theme" site.Params.huggingsite.storageKey }}
 <script>
-	(function() {
-	var stored = window.localStorage?.getItem({{ $storageKey }});
-	var preferred = window.matchMedia?.("(prefers-color-scheme: dark)").matches ? "dark" : "light";
-	document.documentElement.dataset.theme = stored || preferred;
-	document.documentElement.dataset.themeAuto = stored ? "false" : "true";
-	})();
+  (function() {
+  var stored = window.localStorage?.getItem({{ $storageKey }});
+  var preferred = window.matchMedia?.("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+  document.documentElement.dataset.theme = stored || preferred;
+  document.documentElement.dataset.themeAuto = stored ? "false" : "true";
+  })();
 </script>
-
 {{- $params := dict "storageKey" $storageKey }}
-{{- with resources.Get "js/theme-toggle.js" }}
-	{{- warnf "[%04d][ %-20s ] : %s :: LOAD %s" $idx $tpl $.Path . }}
+{{- $themeTogglePath := "js/theme-toggle.js" }}
+{{- with resources.Get $themeTogglePath }}
 	{{- with . | js.Build (dict "params" (dict "storageKey" $storageKey)) }}
-		<script type="module" src="{{ .RelPermalink }}"></script>
+      <script type="module" src="{{ .RelPermalink }}"></script>
 	{{- else }}
-		{{- warnf "js.Build failed for %s" . }}
+		{{- warnf "js.Build failed for %s" $themeTogglePath }}
 	{{- end }}
 {{- else }}
-	{{- warnf "XXJS not found: js/theme-toggle.js" . }}
+	{{- warnf "Theme switcher not found [ %s ]" $themeTogglePath }}
 {{- end }}

@@ -2,14 +2,33 @@
 title = "HuggingSite"
 
 [params]
+   description = "An opinionated -- quite bare Hugo theme"
+   title       = "Oops no title set"
    [params.huggingsite]
       # maybe a map here if we need more browser storage stuff
       storageKey = "huggingsite-theme"
-      siteLogo   = "img/huggingsite_logo-48x48.png"
+
       [params.huggingsite.images]
-         overlay = "img/highlightjs-icon.png"
-         site    = "img/huggingsite-1254x1254.png"
-         error   = "img/huggingsite_404-1254x1254.png"
+         [params.huggingsite.images.error]
+            image   = "img/error.png"
+            overlay = "img/error-overlay.png"
+            size    = 192
+         [params.huggingsite.images.site]
+            image   = "img/site.png"
+            overlay = "img/site-overlay.png"
+            size    = 192
+         [params.huggingsite.images.siteIcon]
+            image   = "img/site-icon.png"
+            overlay = "img/site-icon-overlay.png"
+            size    = 48
+         [params.huggingsite.images.favicon]
+            image   = "img/favicon.png"
+            overlay = "img/favicon-overlay.png"
+            size    = 192
+
+      [params.huggingsite.urls]
+         repo = "https://github.com/irkode/huggingsite"
+
       [params.huggingsite.markup]
          enableHighlightJS = true
          chromaStyle       = "monokai"
@@ -23,5 +42,5 @@ title = "HuggingSite"
 [module]
    [module.hugoVersion]
       extended = false
-      min = '0.166.0'
-      max = '0.166.0'
+      min      = '0.166.0'
+      max      = '0.166.0'

@@ -1,17 +1,9 @@
-{{- $tpl := templates.Current.Name }}
-{{- $pagePath := .Path }}
-{{- $idx := math.Counter }}
-{{- with .Params.keywords }}
-	{{- warnf "[%04d][ %-20s ] : %s :: %s" $idx $tpl $pagePath . }}
-{{- else }}
-	{{- warnf "[%04d][ %-20s ] : %s" $idx $tpl $pagePath }}
-{{- end }}
 {{ $tag := or site.Params.Tag "unreleased" }}
-{{ $buildDate := or site.Params.BuildDate (time.AsTime "2006-01-02") }}
+{{ $buildDate := or site.Params.BuildDate (time.Now.Format "2006-01-02") }}
 <!doctype html>
 <html lang="{{ site.Language.Locale }}" dir="{{ or site.Language.Direction `ltr` }}">
 	<head>
-		{{- partialCached "head.html" . .Path }}
+		{{- partial "head.html" . }}
 		<title>
 			{{- if .IsHome }}
 				{{- site.Title }}
@@ -24,30 +16,11 @@
 		<a class="skip-link" href="#main-content">Skip to main content</a>
 		<header class="site-header">
 			<div class="header-left">
-				{{- $filter := "" }}
-				{{- $path := "img/highlightjs-icon.png" }}
-				{{- with resources.Get $path }}
-					{{- with .Resize "20x" }}
-						{{ $filter = images.Overlay . 0 28 }}
-					{{- else }}
-						{{- errorf "Unable to resize overlay %q" $path }}
-					{{ end }}
-				{{- else }}
-					{{- errorf "Unable to get overlay %q" $path }}
-				{{- end }}
-				{{- with default "img/huggingsite_logo-48x48.png" site.Params.huggingsite.siteLogo }}
-					{{- with $logo := resources.Get . }}
-						{{ with $logo.Filter $filter }}
-							<a href="{{ absURL "" }}">
-								<img src="{{ .RelPermalink }}" id="site-logo" class="header-icon" alt="Home" />
-							</a>
-						{{- else }}
-							<a href="{{ absURL "" }}">
-								<img src="{{ $logo.RelPermalink }}" id="site-logo" class="header-icon" alt="Home" />
-							</a>
-						{{- end }}
+				<a href="{{ absURL "" }}">
+					{{- with partialCached "img/overlay.html" (dict "type" "siteIcon") "site-icon" }}
+						<img src="{{ .RelPermalink }}" id="site-logo" class="header-icon" alt="Home" />
 					{{- end }}
-				{{- end }}
+				</a>
 			</div>
 			<div class="header-center">
 				<input type="checkbox" id="burger-toggle" aria-label="Toggle navigation menu" />
@@ -59,7 +32,7 @@
 				{{- partial "header/menu.html" (dict "menuID" "main" "page" .) -}}
 			</div>
 			<div class="header-right">
-				{{- with $.Param "baseURLs.repo" }}
+				{{- with site.Params.huggingsite.urls.repo }}
 					<a href="{{ . }}"><img id="github-mark" class="header-icon" alt="View on GitHub" /></a>
 				{{- end }}
 				<button type="button" id="theme-toggle" class="icon-button">
@@ -85,11 +58,11 @@
 		</footer>
 
 		{{- if and (.Param "huggingsite.markup.enableHighlightJS") (.Store.Get "loadHighlightJS") }}
-			{{- with resources.Get "js/highlight-hugo-docs.min.js" }}
-				{{- warnf "[%04d][ %-20s ] : %s :: LOAD %s" $idx $tpl $.Path . }}
+			{{- $hljs := "js/highlight-hugo-docs.min.js" }}
+			{{- with resources.Get $hljs }}
 				<script src="{{ .RelPermalink }}"> </script>
 			{{- else }}
-				{{- warnf "JS not found: js/theme-toggle.js" . }}
+				{{- warnf "JS not found: %s while rendering %s" $hljs . }}
 			{{- end }}
 			<script>
 				hljs.configure({ cssSelector: 'pre:not(.chroma) code' });

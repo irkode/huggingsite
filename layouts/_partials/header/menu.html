@@ -1,6 +1,3 @@
-{{- $tpl := templates.Current.Name }}
-{{- $idx := math.Counter }}
-{{- warnf "[%04d][ %-20s ] : %s " $idx $tpl .page.Path }}
 {{- $menuID := .menuID }}
 {{- $page := .page }}
 {{- with index site.Menus $menuID }}
@@ -45,11 +42,11 @@
 		{{- if .HasChildren }}
 			{{- $attrs = merge $attrs (dict "aria-haspopup" "true" "aria-controls" (add "submenu-" $name)) }}
 		{{- end }}
-		{{- if .URL }}
+		{{- if or .URL }}
 			<a
 				{{- range $k, $v := $attrs }}
 					{{- with $v }}
-					{{- printf " %s=%q" $k $v | safeHTMLAttr }}
+						{{- printf " %s=%q" $k $v | safeHTMLAttr }}
 					{{- end }}
 				{{- end -}}>{{ $name }}</a
 			>
@@ -57,7 +54,7 @@
 			<button type="button"
 				{{- range $k, $v := $attrs }}
 					{{- with $v }}
-					{{- printf " %s=%q" $k $v | safeHTMLAttr }}
+						{{- printf " %s=%q" $k $v | safeHTMLAttr }}
 					{{- end }}
 				{{- end -}}>{{ $name }}</button
 			>
