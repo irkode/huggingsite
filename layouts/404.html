@@ -2,10 +2,10 @@
 <article class="headline center">
 	<div class="main">
 		{{- with partialCached "img/overlay.html" (dict "type" "error") "error" }}
-			<img class="img{{ .192 }}" src="{{ .RelPermalink }}" alt="404 error image"/>
+			<img src="{{ .RelPermalink }}" width="{{ .Width }}" height="{{ .Height }}" alt="404 error image"/>
 		{{- end }}
 	</div>
-	<aside>
+	<div class="headline-text">
 		<h1>404 Page not Found</h1>
 		<p>
 			Here is nothing at all you can fetch,</br>
@@ -14,6 +14,6 @@
 			You could try other pages that might,</br>
 			But better: <a href="{{ absURL "" }}"> restart from scratch.</a>
 		</p>
-	</aside>
+	</div>
 </article>
 {{- end }}

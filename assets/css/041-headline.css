@@ -29,7 +29,7 @@
 }
 
 /* center text inside right slot */
-.headline.center > :nth-child(2) {
+.headline.center > .headline-text {
    text-align: center;
 }
 
@@ -44,35 +44,22 @@
    flex: 0 0 auto;
 }
 
-.headline.banner > :nth-child(2) {
+.headline.banner > .headline-text {
    flex: 1 1 auto;
    text-align: left;
    min-width: 0;
 }
 
 /* =========================================================
-   IMAGES (unchanged utilities)
+   IMAGES
    ========================================================= */
-.headline .img192 {
-   width: 192px;
-   flex: 0 0 192px;
-   object-fit: cover;
-}
-
-.headline .img128 {
-   width: 128px;
-   flex: 0 0 128px;
-   object-fit: cover;
-}
-
-.headline .img84 {
-   width: 84px;
-   flex: 0 0 84px;
+.headline img {
+   display: block;
    object-fit: cover;
 }
 
 /* =========================================================
-   TYPOGRAPHY INSIDE ASIDE
+   TYPOGRAPHY INSIDE HEADLINE TEXT
    (optional global styling, keep if desired)
    ========================================================= */
 .headline h1 {
@@ -105,13 +92,9 @@
       align-items: stretch;
    }
 
-   .headline .img192 {
-      width: 128px;
-      flex: 0 0 128px;
-   }
-   .headline .img128 {
-      width: 96px;
-      flex: 0 0 96px;
+   .headline img {
+      max-width: 96px;
+      height: auto;
    }
 
    body.no-hl_img-mobile .headline img {

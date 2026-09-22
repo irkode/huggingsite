@@ -2,12 +2,12 @@
 <div class="headline banner">
 	<div>
 		{{- with partialCached "img/overlay.html" (dict "type" "site" "size" 84) "site" 84 }}
-			<img class="img{{ .Width }}" src="{{ .RelPermalink }}" alt="" />
+			<img src="{{ .RelPermalink }}" width="{{ .Width }}" height="{{ .Height }}" alt="" />
 		{{- end }}
 	</div>
-	<aside>
+	<div class="headline-text">
 		<h1>{{- .Title }}</h1>
-	</aside>
+	</div>
 </div>
 {{- .Content }}
 {{- end }}
