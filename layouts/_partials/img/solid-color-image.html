@@ -13,19 +13,19 @@
 {{- $format := "png" }}
 {{ with . }}
 	{{- if reflect.IsMap . }}
-		{{- with .color }} {{ $color = . }}{{- end }}
-		{{- if and .width .height }} {{- $width = .width }}{{- $height = .height }}
-		{{- else if .width }} {{- $width = .width }}{{- $height = .height }}
-		{{- else if .height }} {{- $height = .height }}{{- $width = .height }}
+		{{- with .color }} {{- $color = . }} {{- end }}
+		{{- if and .width .height }} {{- $width = .width }} {{- $height = .height }}
+		{{- else if .width }} {{- $width = .width }} {{- $height = .height }}
+		{{- else if .height }} {{- $height = .height }} {{- $width = .height }}
 		{{- end }}
-		{{- with .format }} {{ $format = . }}{{- end }}
+		{{- with .format }}{{- $format = . }}{{- end }}
 	{{- else if reflect.IsSlice . }}
-		{{ $len := len . }}
-		{{ if gt $len 4 }}{{- errorf "solid-color.html: a maximum of 4 arguments are allowed" }}{{- end }}
-		{{ if ge $len 1 }}{{- $color = index . 0 }}{{- end }}
-		{{ if ge $len 2 }}{{- $width = index . 1 }}{{- $height = index . 1 -}}{{- end }}
-		{{ if ge $len 3 }}{{- $height = index . 2 -}}{{- end }}
-		{{ if eq $len 4 }}{{- $format = index . 3 }}{{- end }}
+		{{- $len := len . }}
+		{{- if gt $len 4 }} {{- errorf "solid-color.html: a maximum of 4 arguments are allowed" }}{{- end }}
+		{{- if ge $len 1 }} {{- $color = index . 0 }} {{- end }}
+		{{- if ge $len 2 }} {{- $width = index . 1 }} {{- $height = index . 1 -}} {{- end }}
+		{{- if ge $len 3 }} {{- $height = index . 2 -}} {{- end }}
+		{{- if eq $len 4 }} {{- $format = index . 3 }} {{- end }}
 	{{- else if eq "string" (printf "%T" .) }}
 		{{- $color = . }}
 	{{- end }}
@@ -33,18 +33,19 @@
 {{- $img := "" }}
 {{- $color := strings.TrimPrefix "#" $color }}
 {{- if findRE `^[0-9a-fA-F]{6}$` $color 1 }}
-	{{/* fixed 54-byte BMP header (file header + BITMAPINFOHEADER), 1x1px, 24bpp */}}
-	{{ $header := "424d3a000000000000003600000028000000010000000100000001001800000000000400000000000000000000000000000000000000" }}
+	{{- /* fixed 54-byte BMP header (file header + BITMAPINFOHEADER), 1x1px, 24bpp */ -}}
+	{{- $header := "424d3a000000000000003600000028000000010000000100000001001800000000000400000000000000000000000000000000000000" }}
 
-	{{ $r := substr $color 0 2 }}
-	{{ $g := substr $color 2 2 }}
-	{{ $b := substr $color 4 2 }}
-	{{ $color = printf "%s%s%s00" $b $g $r }}
+	{{- $r := substr $color 0 2 }}
+	{{- $g := substr $color 2 2 }}
+	{{- $b := substr $color 4 2 }}
+	{{- $color = printf "%s%s%s00" $b $g $r }}
 
-	{{ $bytes := encoding.HexDecode (print $header $color) }}
-	{{ $img = resources.FromString (printf "img/og-text-%s.bmp" $color) $bytes }}
-	{{ $img = $img.Resize (printf "%dx%d %s" $width $height $format) }}
+	{{- $bytes := encoding.HexDecode (print $header $color) }}
+	{{- $img = resources.FromString (printf "img/og-text-%s.bmp" $color) $bytes }}
+	{{- $img = $img.Resize (printf "%dx%d %s" $width $height $format) }}
 {{- else }}
 	{{- errorf "solid-color.html: not a valid HEX color value %s" $color }}
 {{- end }}
-{{ return $img }}
+{{- return $img }}
+{{- /**/ -}}

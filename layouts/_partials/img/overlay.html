@@ -22,14 +22,14 @@
 		{{- with resources.Get $opts.overlay }}
 			{{- $tileSize := div $imageSize 2 }}
 			{{- with .Resize (printf "%dx" $tileSize) }}
-				{{ with images.Overlay . 0 $tileSize }}
+				{{- with images.Overlay . 0 $tileSize }}
 					{{- return $image.Filter . }}
 				{{- else }}
 					{{- errorf "apply overlay failed for: [ %q ]" $opts.image }}
 				{{- end }}
 			{{- else }}
 				{{- errorf "resize overlay image failed: [ %q ]" $opts.overlay }}
-			{{ end }}
+			{{- end }}
 		{{- else }}
 			{{- warnf "overlay image not found [ %q ]" $opts.overlay }}
 		{{- end }}

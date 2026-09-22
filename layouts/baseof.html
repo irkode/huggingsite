@@ -8,8 +8,8 @@
 			{{- if .IsHome }}
 				{{- site.Title }}
 			{{- else }}
-				{{- printf "%s | %s" (or .Title $.Title) site.Title }}
-			{{- end }}
+				{{- printf "%s | %s" (or .Title $.Title) site.Title -}}
+			{{- end -}}
 		</title>
 	</head>
 	<body{{ if not (in (slice "home" "404") .Kind) }} class="no-hl_img-mobile"{{ end }}>
@@ -71,3 +71,4 @@
 		{{- end }}
 	</body>
 </html>
+{{- /**/ -}}
