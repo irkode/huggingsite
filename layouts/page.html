@@ -10,7 +10,7 @@
 		{{- end }}
 	</div>
 	<div class="headline-text">
-		<h1>{{- .Title }}</h1>
+		<h1>{{- or .Params.Caption .Title }}</h1>
 		{{ .Summary }}
 	</div>
 </div>
