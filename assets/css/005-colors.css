@@ -31,7 +31,7 @@
 
   --_accent-dark:        #ffb300;
   --_accent-hover-dark:  #ffe099;
-  --_heading-dark:       rgb(0, 209, 178); /* external theme value */
+  --_heading-dark:       rgb(0, 209, 178);
 
   /* accent-bg (surface behind accent) */
   --_accent-bg-light: var(--_white);
@@ -43,10 +43,11 @@
 
   /* menu button */
   --_menu-button-light: #043f3f;
-  --_menu-button-dark:  rgb(0, 209, 178); /* external theme value */
+  --_menu-button-dark:  rgb(0, 209, 178);
 
   /* highlight / mark */
-  --_marked: #fd3; /* same in both modes */
+  --_marked-light: #fd3;
+  --_marked-dark: #fd3;
 
   /* code */
   --_code-bg-light:        #f0eeee;
@@ -76,7 +77,7 @@
 
   /* interactive */
   --menu-button-bg: light-dark(var(--_menu-button-light), var(--_menu-button-dark));
-  --marked:         var(--_marked);
+  --marked:         light-dark(var(--_marked-light), var(--_marked-dark));
 
   /* code */
   --code-bg:          light-dark(var(--_code-bg-light),        var(--_code-bg-dark));

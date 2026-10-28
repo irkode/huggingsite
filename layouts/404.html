@@ -1,20 +1,29 @@
 {{- define "main" }}
-<article class="headline center">
-	<div class="main">
-		{{- with partialCached "img/overlay.html" (dict "type" "error") "error" }}
-			<img src="{{ .RelPermalink }}" width="{{ .Width }}" height="{{ .Height }}" alt="404 error image"/>
+{{ $errorPage := site.GetPage "/error-404" }}
+<section class="headline center">
+	<div>
+		{{- with partial "img/overlay.html" (dict "type" "error") "error" }}
+			{{- if and (reflect.IsImageResource .) (reflect.IsImageResourceProcessable .) }}
+				<img src="{{ .RelPermalink }}" width="{{ .Width }}" height="{{ .Height }}" alt="404 Image" />
+			{{- else }}
+				<img src="{{ .RelPermalink }}" width="{{ site.Params.huggingsite.layoutImages.error.size }}" height="{{ site.Params.huggingsite.layoutImages.error.size }}" alt="404 image" />
+			{{- end }}
 		{{- end }}
 	</div>
 	<div class="headline-text">
-		<h1>404 Page not Found</h1>
-		<p>
-			Here is nothing at all you can fetch,</br>
-			There might be other <b><em>Ode</em></b>s to catch.</br>
-			You found only <b><em>Irk</em></b> on this site,</br>
-			You could try other pages that might,</br>
-			But better: <a href="{{ absURL "" }}"> restart from scratch.</a>
-		</p>
+		{{- with $errorPage }}
+			<h1>{{- .Title }}</h1>
+			{{- .Summary }}
+		{{- else }}
+			<h1>{{ site.Params.huggingsite.error404.title }}</h1>
+			<p>{{- site.Params.huggingsite.error404.summary | .RenderString }}</p>
+		{{- end }}
 	</div>
-</article>
+</section>
+{{- with $errorPage }}
+	<section>
+		{{ .ContentWithoutSummary }}
+	</section>
+{{- end }}
 {{- end }}
 {{- /**/ -}}

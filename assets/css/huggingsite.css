@@ -1,6 +1,9 @@
 /* heavily co-authored by https://claude.ai/chat/ and https://chatgpt.com/ */
 @import "000-reset.css";
 @import "005-colors.css";
+@import "005-fonts.css";
+/* @import "../fonts/spectral/_index.css";
+@import "../fonts/ibm-plex-mono/_index.css"; */
 @import "005-vars.css";
 
 @import "020-layout.css";

@@ -1,0 +1,25 @@
+{{- if and (reflect.IsSlice .) (eq (len .) 2) -}}
+	{{- $path := index . 0 }}
+	{{- $dimensions := index . 1 }}
+	{{- with resources.Get $path }}
+		{{ if reflect.IsImageResource . }}
+			{{ if reflect.IsImageResourceProcessable . }}
+				{{- with .Resize $dimensions }}
+					{{- return . }}
+				{{- else }}
+					{{- errorf "image resize failed [ %s (scale=%s)]" .Name $dimensions }}
+				{{- end }}
+			{{- else }}
+				{{- warnidf "HUGIMG_RESIZE" "[HUGIMG_RESIZE] image is not resizable [%s] (type=%s) => use HTML/CSS to resize" . .MediaType }}
+				{{- return . }}
+			{{- end }}
+		{{ else }}
+			{{- errorf "HUGIMG_NOTFOUND" "[HUGIMG_WRONGTYPE]: resource is not an image  [ %s (type=%d)]" . .ResourceType }}
+		{{- end }}
+	{{- else }}
+		{{- errorf "HUGIMG_NOTFOUND" "[HUGIMG_NOTFOUND]: global resource not found at %v [ %v ]" page.Path $path }}
+	{{- end }}
+{{- else }}
+	{{- errorf "HUGIMG_SYNTAX" "[HUGIMG_SYNTAX]: get-image-resource (slice <path> <scale>)" -}}
+{{- end }}
+{{ return (index slice 0) }}

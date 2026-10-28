@@ -1,14 +1,19 @@
 {{- define "main" }}
 <div class="headline banner">
 	<div>
-		{{- with partialCached "img/overlay.html" (dict "type" "site" "size" 84) "site" 84 }}
-			<img src="{{ .RelPermalink }}" width="{{ .Width }}" height="{{ .Height }}" alt="" />
+		{{- with partialCached "img/overlay.html" (dict "type" "page") "page" .Path }}
+			{{- if and (reflect.IsImageResource .) (reflect.IsImageResourceWithMeta .) }}
+				<img src="{{ .RelPermalink }}" width="{{ .Width }}" height="{{ .Height }}" alt="Page Teaser Image" />
+			{{- else }}
+				<img src="{{ .RelPermalink }}" width="{{ site.Params.huggingsite.layoutImages.page.size }}" height="{{ site.Params.huggingsite.layoutImages.page.size }}" alt="Page Teaser Image" />
+			{{- end }}
 		{{- end }}
 	</div>
 	<div class="headline-text">
 		<h1>{{- .Title }}</h1>
+		{{ .Summary }}
 	</div>
 </div>
-{{- .Content }}
+{{- .ContentWithoutSummary }}
 {{- end }}
 {{- /**/ -}}

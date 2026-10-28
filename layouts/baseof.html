@@ -17,7 +17,7 @@
 		<header class="site-header">
 			<div class="header-left">
 				<a href="{{ absURL "" }}">
-					{{- with partialCached "img/overlay.html" (dict "type" "siteIcon") "site-icon" }}
+					{{- with partialCached "img/overlay.html" (dict "type" "logo") "logo" }}
 						<img src="{{ .RelPermalink }}" id="site-logo" class="header-icon" alt="Home" />
 					{{- end }}
 				</a>

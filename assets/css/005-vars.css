@@ -5,10 +5,10 @@
  */
 :root {
    --tab-size: 3;
-   --sans-font:
-      "Avenir Next", Avenir, "Nimbus Sans L", Roboto, "Noto Sans", "Segoe UI", Arial, Helvetica,
-      "Helvetica Neue", sans-serif;
-   --mono-font: Consolas, Menlo, Monaco, "Andale Mono", "Ubuntu Mono", monospace;
+   --sans-font: "Spectral"; /*, "Avenir Next", Avenir, "Nimbus Sans L", Roboto, "Noto Sans", "Segoe UI", Arial, Helvetica,
+      "Helvetica Neue", sans-serif; */
+   --mono-font: "IBM Plex Mono";
+/* Consolas, Menlo, Monaco, "Andale Mono", "Ubuntu Mono", monospace; */
    --auto-mode-icon: url("img/auto-mode.svg");
 
    /* Changes with the selected scheme */

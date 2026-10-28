@@ -1,5 +1,6 @@
 {{- with $ogImage := partialCached "img/overlay.html" (dict "type" "og") "og" }}
 	{{ if and (reflect.IsImageResource .) (reflect.IsImageResourceProcessable .) }}
+		{{- /* with $ogText := partialCached "img/solid-color-image.html" (slice "#976941" 760 440) */}}
 		{{- with $ogText := partialCached "img/solid-color-image.html" (slice "#976941" 760 440) }}
 
 			{{- $fontPath := "fonts/ArchivoBlack-Regular.ttf" }}
@@ -25,6 +26,7 @@
 				"y" (mul $ogText.Height 0.5 | int)
 			}}
 			{{- $ogText = $ogText | images.Filter (images.Text site.Params.Description $optsText) }}
+
 			{{- $optsTitle := dict
 				"alignx" "center"
 				"aligny" "center"
@@ -35,14 +37,15 @@
 				"x" 600
 				"y" 47
 			}}
+
 			{{ $optsURL := dict
-				"alignx" "left"
+				"alignx" "center"
 				"aligny" "center"
 				"color" "#000000"
 				"font" $font
 				"linespacing" 8
 				"size" 24
-				"x" 10
+				"x" 600
 				"y" 582
 			}}
 

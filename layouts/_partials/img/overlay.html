@@ -3,41 +3,58 @@
 
    parameters: DICT
    - image: the image to overlay
-   - overlay: the image used to overlay
-   - size: the target size of the result image
+   - overlay: the image used as overlay
+   - scale: the target scale of the result image
    - type: initialize values from params.huggingsite.images.type
 */ -}}
-
+{{- $c := math.Counter }}
 {{- $opts := . }}
-{{- with $opts.type }}
-	{{- with index site.Params.huggingsite.images . }}
-		{{- $opts = merge . $opts }}
-	{{- else }}
-		{{- errorf "unknown site image definition '%s'" . }}
-	{{- end }}
+{{- $default := site.Params.huggingsite.layoutImages.default }}
+{{- if not $default }}
+	{{- $default = dict "image" "img/site.png" "overlay" "img/site-overlay.png" "scale" "220x" }}
+	{{- warnidf "HUGIMG_CONFIG" "HUGIMG_CONFIG missing 'huggingsite.layoutImages.default' --> fallback to hardcoded values" }}
+	{{- warnidf "HUGIMG_CONFIG" "HUGIMG_DEFAULT %v" $default }}
 {{- end }}
-{{- with $image := resources.Get $opts.image }}
-	{{- $imageSize := or $opts.size $image.Width }}
-	{{- with $image = .Resize (printf "%dx" $imageSize) }}
-		{{- with resources.Get $opts.overlay }}
-			{{- $tileSize := div $imageSize 2 }}
-			{{- with .Resize (printf "%dx" $tileSize) }}
-				{{- with images.Overlay . 0 $tileSize }}
-					{{- return $image.Filter . }}
-				{{- else }}
-					{{- errorf "apply overlay failed for: [ %q ]" $opts.image }}
-				{{- end }}
-			{{- else }}
-				{{- errorf "resize overlay image failed: [ %q ]" $opts.overlay }}
-			{{- end }}
-		{{- else }}
-			{{- warnf "overlay image not found [ %q ]" $opts.overlay }}
-		{{- end }}
-		{{- return . }}
+{{- if isSet site.Params.huggingsite.layoutImages $opts.type }}
+	{{- with index site.Params.huggingsite.layoutImages $opts.type }}
+		{{- $opts = merge $default . $opts }}
 	{{- else }}
-		{{- errorf "image resize failed [ %q ]" $opts.image }}
+		{{- $opts = merge $default $opts }}
 	{{- end }}
 {{- else }}
-	{{- errorf "image not found [ %q ]" $opts.image }}
+	{{- warnidf "HUGIMG_CONFIG" "HUGIMG_CONFIG: unknown image definition definition '%s' --> fallback to default values" . }}
+	{{- $opts = merge $default $opts }}
 {{- end }}
-{{- /**/ -}}
+
+{{ with $image := partialCached "./get-resized-image.html" (slice $opts.image $opts.scale) $opts.image $opts.scale }}
+	{{- if $opts.overlay }}
+		{{ if reflect.IsImageResourceProcessable $image }}
+			{{- $tileScale := printf "%dx%d" (div $image.Width 2) (div $image.Height 2) }}
+			{{- $overlay := partialCached "./get-resized-image.html" (slice $opts.overlay $tileScale) $opts.overlay $tileScale }}
+			{{ if reflect.IsImageResource $overlay }}
+				{{- $tilePosX := 0 }}
+				{{- $tilePosY := $overlay.Height }}
+				{{- with images.Overlay $overlay $tilePosX $tilePosY -}}
+					{{- with $image.Filter . }}
+						{{- return . }}
+					{{- else }}
+						{{- errorf "apply overlay to image failed: [ %s -> %s (pos=%d,%d)]" $image $overlay $tilePosX $tilePosY }}
+					{{- end }}
+				{{- else }}
+					{{- errorf "create overlay filter failed: [ %s (scale=%d)]" $overlay $opts.scale }}
+				{{- end }}
+			{{- else }}
+				{{- warnf "overlay is not an image or not processable => no overlay applied: [ %s (scale=%d)]" $overlay $opts.scale }}
+				{{- return . }}
+			{{- end }}
+		{{ else }}
+			{{- warnf "image is not processable [%s] (type=%s) ==> Skipping overlay" . .MediaType }}
+			{{- return . }}
+		{{- end }}
+	{{ else }}
+		{{- return . }}
+	{{- end }}
+{{- else }}
+	{{- errorf "FATAL unhandled error in [ %s ] for [ %s ]" templates.Current.Name $opts.image }}
+{{- end }}
+{{- return index slice 0 -}}

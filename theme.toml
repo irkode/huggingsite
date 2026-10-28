@@ -1,15 +1,15 @@
 name = "HuggingSite"
 license = "MIT"
 licenselink = "/LICENSE"
-description = "A quite bare opinonated Hugo Theme"
+description = "A quite bare personal Hugo Theme"
 
 # The home page of the theme, where the source can be found.
 homepage = "https://github.com/irkode/huggingsite"
 
 # If you have a running demo of the theme.
-demosite = "https://irkode.io/huggingsite/"
+demosite = "https://irkode.github.io/huggingsite/"
 
-tags = ["opinionated", "bare"]
+tags = ["personal", "bare"]
 
 # If the theme has a single author
 [author]

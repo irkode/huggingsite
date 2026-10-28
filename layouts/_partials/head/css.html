@@ -1,11 +1,20 @@
+{{- /* looks like --minify on the commandline does not minify the css.Build output */ -}}
 {{- $opts := dict
 	"targetPath" "/css/huggingsite.css"
 	"loaders" (dict ".svg" "dataurl")
+	"minify" (ne hugo.Environment "development")
 }}
 
 {{- with "css/huggingsite.css" }}
 	{{- with resources.Get . }}
 		{{- with . | css.Build $opts }}
+			{{- range where .Data.Artifacts "MediaType.MainType" "font" }}
+				{{- with .RelPermalink }}
+					{{- if index (findRE `spectral-latin-(?:400|700)-normal` . 1) 0 }}
+						<link rel="preload" href="{{ . }}" as="font" type="font/woff2" crossorigin />
+					{{- end }}
+				{{- end }}
+			{{- end }}
 			<link rel="stylesheet" href="{{ .RelPermalink }}" />
 		{{- else }}
 			{{- warnf "css.Build for %s failed" . }}

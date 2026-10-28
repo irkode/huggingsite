@@ -1,0 +1,23 @@
+{{- define "main" }}
+<article class="headline center">
+	<div class="main">
+		{{- with partialCached "img/overlay.html" (dict "type" "about") "about" }}
+			{{- if and (reflect.IsImageResource .) (reflect.IsImageResourceWithMeta .) }}
+				<img src="{{ .RelPermalink }}" width="{{ .Width }}" height="{{ .Height }}" alt="404 Image" />
+			{{- else }}
+				<img src="{{ .RelPermalink }}" width="{{ site.Params.huggingsite.layoutImages.error.size }}" height="{{ site.Params.huggingsite.layoutImages.error.size }}" alt="404 image" />
+			{{- end }}
+		{{- end }}
+	</div>
+	<div class="headline-text">
+		<h1>{{ .Title }}</h1>
+		{{- .Summary }}
+	</p>
+</div>
+</article>
+{{- with partialCached "img/og-image.html" . }}
+	<img src="{{ .RelPermalink }}"/>
+{{- end }}
+{{- .ContentWithoutSummary }}
+{{- end }}
+{{- /**/ -}}

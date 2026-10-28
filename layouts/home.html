@@ -1,15 +1,28 @@
 {{- define "main" }}
 <div class="headline banner">
 	<div>
-		{{- with partialCached "img/overlay.html" (dict "type" "site" "size" 128) "site" 128 }}
-			<img src="{{ .RelPermalink }}" width="{{ .Width }}" height="{{ .Height }}" alt="" />
+		{{- with partial "img/overlay.html" (dict "type" "home") "home" }}
+			{{- if and (reflect.IsImageResource .) (reflect.IsImageResourceWithMeta .) }}
+				<img src="{{ .RelPermalink }}" width="{{ .Width }}" height="{{ .Height }}" alt="Site Teaser Image" />
+			{{- else }}
+				<img src="{{ .RelPermalink }}" width="{{ site.Params.huggingsite.layoutImages.site.size }}" height="{{ site.Params.huggingsite.layoutImages.site.size }}" alt="Site Teaser Image" />
+			{{- end }}
+		{{- else }}
+			{{- errorf " generation of headline image failed: %s" templates.Current.Name }}
 		{{- end }}
 	</div>
 	<div class="headline-text">
 		<h1>{{ or .Description site.Params.Description }}</h1>
 	</div>
 </div>
+<ul>
+	{{ range where .Site.RegularPages "Section" "in" .Site.MainSections }}
+		<li><a href="{{ .RelPermalink }}">{{- with .Title }}{{ . }}{{ else }}{{ .Path }}{{ end -}}</a>
+			{{ .Summary }}
+		</li>
+	{{- end }}
+</ul>
 
-{{- .Content }}
+{{- .ContentWithoutSummary }}
 {{- end }}
 {{- /**/ -}}

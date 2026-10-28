@@ -1,8 +1,12 @@
 {{- define "main" }}
 <div class="headline banner">
 	<div>
-		{{- with partialCached "img/overlay.html" (dict "type" "site" "size" 128) "site" 128 }}
-			<img src="{{ .RelPermalink }}" width="{{ .Width }}" height="{{ .Height }}" alt="" />
+		{{- with partialCached "img/overlay.html" (dict "type" "section") .Section }}
+			{{- if and (reflect.IsImageResource .) (reflect.IsImageResourceWithMeta .) }}
+				<img src="{{ .RelPermalink }}" width="{{ .Width }}" height="{{ .Height }}" alt="Section Teaser Image" />
+			{{- else }}
+				<img src="{{ .RelPermalink }}" width="{{ site.Params.huggingsite.layoutImages.section.size }}" height="{{ site.Params.huggingsite.layoutImages.section.size }}" alt="Section Teaser Image" />
+			{{- end }}
 		{{- end }}
 	</div>
 	<div class="headline-text">
@@ -12,10 +16,10 @@
 <ul>
 	{{- range .RegularPagesRecursive }}
 		<li><a href="{{ .RelPermalink }}">{{- with .Title }}{{ . }}{{ else }}{{ .Path }}{{ end -}}</a>
-			<p>{{ .Params.excerpt }}</p>
+			{{ .Summary }}
 		</li>
 	{{- end }}
 </ul>
-{{- .Content }}
+{{- .ContentWithoutSummary }}
 {{- end }}
 {{- /**/ -}}

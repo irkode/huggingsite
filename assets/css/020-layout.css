@@ -9,6 +9,9 @@ pre code {
    white-space: pre;
    tab-size: var(--tab-size);
    font-family: var(--mono-font);
+   font-size: 0.85em;
+   font-weight: 400;
+
    border-width: 0;
    /* reset the global line-height so code block bg has no gaps */
    line-height: 1.5;
@@ -56,6 +59,7 @@ hr {
    margin-top: 1.25rem;
    border: 1px solid var(--text);
 }
+
 #license::after {
    content: var(--icon-license);
    display: inline-block;
