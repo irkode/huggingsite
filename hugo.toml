@@ -1,15 +1,16 @@
-# Hugginsite default theme config
+# Huggingsite default theme config
 title = "HuggingSite"
 
 [params]
    description = "A quite bare personal Hugo Theme"
    title       = "Oops no page title set"
+
    [params.huggingsite]
       # maybe a map here if we need more browser storage stuff
       storageKey = "huggingsite-theme"
 
       [params.huggingsite.error404]
-         title = "404 Page not found"
+         title   = "404 Page not found"
          summary = """A lost user arrives in dismay,  
                       For your own 404's gone astray.  
                       To keep tempers at zero,  
@@ -21,14 +22,21 @@ title = "HuggingSite"
             image   = "img/site.png"
             overlay = "img/site-overlay.png"
             scale   = "220x220"
+
          [params.huggingsite.layoutImages.error]
             overlay = "img/error-overlay.png"
+
          [params.huggingsite.layoutImages.logo]
             scale = "48x48"
+
          [params.huggingsite.layoutImages.about]
+
          [params.huggingsite.layoutImages.home]
+
          [params.huggingsite.layoutImages.page]
+
          [params.huggingsite.layoutImages.section]
+
          [params.huggingsite.layoutImages.og]
             scale = "440x440"
 
@@ -42,21 +50,27 @@ title = "HuggingSite"
          #  language        a language chroma can render
          #  hljs            autodetect with highlightjs
          # hljs-pass-language   pass language to highlightjs
-         #fallbackEmpty   = "hljs"
-         #fallbackUnknown = "hljs-hugo-html"
+         # fallbackEmpty   = "hljs"
+         # fallbackUnknown = "hljs-hugo-html"
+
+[markup]
+   [markup.highlight]
+      noClasses = false
+      style     = "monokai"
 
 [[cascade]]
    [cascade.build]
-      list             = 'local'
+      list             = "local"
       publishResources = false
-      render           = 'never'
+      render           = "never"
+
    [cascade.target]
       path = "{/error-404,/error-404/**}"
 
 [imaging]
    [imaging.webp]
-      compression = 'lossless'
-      hint        = 'drawing'
+      compression = "lossless"
+      hint        = "drawing"
       method      = 6
       quality     = 100
       useSharpYuv = true
@@ -64,4 +78,4 @@ title = "HuggingSite"
 [module]
    [module.hugoVersion]
       extended = false
-      min      = '0.169.0'
+      min      = "0.169.0"
