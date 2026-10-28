@@ -3,6 +3,9 @@
 /public
 /resources
 
+# don't add external theme components
+/themes
+
 # development
 /node_modules
 # dev temp file to keep locally
