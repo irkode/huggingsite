@@ -1,37 +1,43 @@
-# Hugginface default theme config
+# Hugginsite default theme config
 title = "HuggingSite"
 
 [params]
-   description = "An opinionated -- quite bare Hugo theme"
-   title       = "Oops no title set"
+   description = "A quite bare personal Hugo Theme"
+   title       = "Oops no page title set"
    [params.huggingsite]
       # maybe a map here if we need more browser storage stuff
       storageKey = "huggingsite-theme"
 
-      [params.huggingsite.images]
-         [params.huggingsite.images.error]
-            image   = "img/error.png"
-            overlay = "img/error-overlay.png"
-            size    = 192
-         [params.huggingsite.images.site]
+      [params.huggingsite.error404]
+         title = "404 Page not found"
+         summary = """A lost user arrives in dismay,  
+                      For your own 404's gone astray.  
+                      To keep tempers at zero,  
+                      Be your site's helpful hero:  
+                      Make a custom page showing the way!"""
+
+      [params.huggingsite.layoutImages]
+         [params.huggingsite.layoutImages.default]
             image   = "img/site.png"
             overlay = "img/site-overlay.png"
-            size    = 192
-         [params.huggingsite.images.siteIcon]
-            image   = "img/site-icon.png"
-            overlay = "img/site-icon-overlay.png"
-            size    = 48
-         [params.huggingsite.images.favicon]
-            image   = "img/favicon.png"
-            overlay = "img/favicon-overlay.png"
-            size    = 192
+            scale   = "220x220"
+         [params.huggingsite.layoutImages.error]
+            overlay = "img/error-overlay.png"
+         [params.huggingsite.layoutImages.logo]
+            scale = "48x48"
+         [params.huggingsite.layoutImages.about]
+         [params.huggingsite.layoutImages.home]
+         [params.huggingsite.layoutImages.page]
+         [params.huggingsite.layoutImages.section]
+         [params.huggingsite.layoutImages.og]
+            scale = "440x440"
 
       [params.huggingsite.urls]
          repo = "https://github.com/irkode/huggingsite"
 
-      [params.huggingsite.markup]
-         enableHighlightJS = true
-         chromaStyle       = "monokai"
+         # [params.huggingsite.markup]
+         # enableHighlightJS = true
+         # chromaStyle       = "monokai"
          # language fallback settings
          #  language        a language chroma can render
          #  hljs            autodetect with highlightjs
@@ -39,8 +45,23 @@ title = "HuggingSite"
          #fallbackEmpty   = "hljs"
          #fallbackUnknown = "hljs-hugo-html"
 
+[[cascade]]
+   [cascade.build]
+      list             = 'local'
+      publishResources = false
+      render           = 'never'
+   [cascade.target]
+      path = "{/error-404,/error-404/**}"
+
+[imaging]
+   [imaging.webp]
+      compression = 'lossless'
+      hint        = 'drawing'
+      method      = 6
+      quality     = 100
+      useSharpYuv = true
+
 [module]
    [module.hugoVersion]
       extended = false
-      min      = '0.166.0'
-      max      = '0.166.0'
+      min      = '0.169.0'
