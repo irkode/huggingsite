@@ -43,6 +43,9 @@ title = "HuggingSite"
       [params.huggingsite.urls]
          repo = "https://github.com/irkode/huggingsite"
 
+      [params.huggingsite.markup.highlight]
+         # one of: follow, toggle, dark, light
+         schemeMode = "follow"
          # [params.huggingsite.markup]
          # enableHighlightJS = true
          # chromaStyle       = "monokai"

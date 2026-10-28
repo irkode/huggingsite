@@ -1,5 +1,45 @@
+
+{{- $chromaStyles := "" }}
+{{- $schemeMode := or site.Params.huggingsite.markup.highlight.schemeMode "follow" }}
+{{- if in (slice "dark" "light") $schemeMode }}
+	{{- $opts := dict
+		"mode" $schemeMode
+		"modeSelector" false
+		"targetPath" "css/chroma.css"
+	}}
+	{{ $chromaStyles = css.ChromaStyles $opts }}
+{{- else }}
+	{{- $opts := dict
+		"mode" "light"
+		"modeSelector" false
+		"targetPath" "css/chroma-light.css"
+	}}
+	{{- $chromaLight := css.ChromaStyles $opts }}
+	{{- $opts := dict
+		"mode" "dark"
+		"modeSelector" false
+		"targetPath" "css/chroma-dark.css"
+	}}
+	{{ $chromaDark := css.ChromaStyles $opts }}
+
+	{{- if eq "follow" $schemeMode }}
+		{{- $chromaStyles = add
+			"html[data-theme='light'] {\n" $chromaLight.Content "}\n"
+			"html[data-theme='dark'] {\n" $chromaDark.Content "}\n" | resources.FromString "css/chroma.css"
+		}}
+	{{- else if eq "toggle" $schemeMode }}
+		{{- $chromaStyles = add
+			"html[data-theme='light'] {\n" $chromaDark.Content "}\n"
+			"html[data-theme='dark'] {\n" $chromaLight.Content "}\n" | resources.FromString "css/chroma.css"
+		}}
+	{{- else }}
+		{{- errorf "invalid highlight scheme mode [%s]" $schemeMode }}
+	{{- end }}
+{{- end }}
+
 {{- /* looks like --minify on the commandline does not minify the css.Build output */ -}}
 {{- $opts := dict
+	"importContext" (slice $chromaStyles)
 	"targetPath" "/css/huggingsite.css"
 	"loaders" (dict ".svg" "dataurl")
 	"minify" (ne hugo.Environment "development")

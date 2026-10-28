@@ -2,9 +2,9 @@
 @import "000-reset.css";
 @import "005-colors.css";
 @import "005-fonts.css";
-/* @import "../fonts/spectral/_index.css";
-@import "../fonts/ibm-plex-mono/_index.css"; */
 @import "005-vars.css";
+
+@import "./chroma.css";
 
 @import "020-layout.css";
 @import "025-theme-toggle.css";
