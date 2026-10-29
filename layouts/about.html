@@ -15,9 +15,6 @@
 	</p>
 </div>
 </article>
-{{- with partialCached "img/og-image.html" . }}
-	<img src="{{ .RelPermalink }}"/>
-{{- end }}
 {{- .ContentWithoutSummary }}
 {{- end }}
 {{- /**/ -}}
