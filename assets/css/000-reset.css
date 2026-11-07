@@ -34,6 +34,10 @@ h5,
 h6 {
    overflow-wrap: break-word;
 }
+p img {
+    display: inline;
+    vertical-align: middle;
+}
 @media (prefers-reduced-motion: no-preference) {
    html {
       interpolate-size: allow-keywords;
