@@ -1,6 +1,5 @@
 {{- with $ogImage := partialCached "img/overlay.html" (dict "type" "og") "og" }}
 	{{ if and (reflect.IsImageResource .) (reflect.IsImageResourceProcessable .) }}
-		{{- /* with $ogText := partialCached "img/solid-color-image.html" (slice "#976941" 760 440) */}}
 		{{- with $ogText := partialCached "img/solid-color-image.html" (slice "#976941" 760 440) }}
 
 			{{- $fontPath := "fonts/ArchivoBlack-Regular.ttf" }}

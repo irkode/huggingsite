@@ -11,7 +11,7 @@
 {{- $themeTogglePath := "js/theme-toggle.js" }}
 {{- with resources.Get $themeTogglePath }}
 	{{- with . | js.Build (dict "params" (dict "storageKey" $storageKey)) }}
-      <script type="module" src="{{ .RelPermalink }}"></script>
+      <script type="module" src="{{ .RelPermalink }}" defer></script>
 	{{- else }}
 		{{- warnf "js.Build failed for %s" $themeTogglePath }}
 	{{- end }}

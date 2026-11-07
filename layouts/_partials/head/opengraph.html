@@ -1,7 +1,8 @@
 {{- /* Open Graph + Twitter Card tags.
-   Rendered per page from head.html (cached by .Path), so values vary per page.
+   Currently we cache the image
    Share image: per-page front matter `images` (first entry) if set, otherwise the
-   site image stamped with the overlay and resized to a 1200 square via img/overlay.html.
+   site image stamped with the overlay and resized to a 440 square via img/overlay.html.
+   the complete image is 1200x630
 */ -}}
 {{- $title := cond .IsHome site.Title .Title }}
 {{- $description := or .Description site.Params.description }}
