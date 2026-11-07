@@ -26,4 +26,12 @@
 	</section>
 {{- end }}
 {{- end }}
+{{ define "footer-left" }}
+{{ with site.GetPage "/error-404" }}
+	{{- with .GitInfo }}
+		{{- warnf "ERR: %s" .Hash }}
+	{{- end }}
+{{- end }}
+<!-- no left footer -->
+{{- end }}
 {{- /**/ -}}
