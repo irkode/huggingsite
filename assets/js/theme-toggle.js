@@ -1,6 +1,6 @@
-import * as h4hParams from '@params';
+import * as huggingsiteParams from '@params';
 
-const storageKey = h4hParams.storageKey;
+const browserLocalStorageKey = huggingsiteParams.browserLocalStorageKey;
 const toggleTheme = () => {
    const html = document.documentElement;
    const preferred = window.matchMedia?.("(prefers-color-scheme: dark)").matches ? "dark" : "light";
@@ -26,15 +26,15 @@ const toggleTheme = () => {
    }
 
    if (nextAuto) {
-      window.localStorage?.removeItem(storageKey);
+      window.localStorage?.removeItem(browserLocalStorageKey);
    } else {
-      window.localStorage?.setItem(storageKey, nextScheme);
+      window.localStorage?.setItem(browserLocalStorageKey, nextScheme);
    }
 
 
    html.dataset.theme = nextScheme;
    html.dataset.themeAuto = String(nextAuto);
-   nextAuto && (nextScheme === preferred) ? window.localStorage?.removeItem(storageKey) : window.localStorage?.setItem(storageKey, nextScheme);
+   nextAuto && (nextScheme === preferred) ? window.localStorage?.removeItem(browserLocalStorageKey) : window.localStorage?.setItem(browserLocalStorageKey, nextScheme);
 };
 document.getElementById("theme-toggle")?.addEventListener("click", (e) => {
    e.preventDefault();

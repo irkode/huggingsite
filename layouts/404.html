@@ -1,5 +1,5 @@
 {{- define "main" }}
-{{ $errorPage := site.GetPage "/error-404" }}
+{{- $errorPage := site.GetPage "/error-404" }}
 <section class="headline center">
 	<div>
 		{{- with partial "img/overlay.html" (dict "type" "error") "error" }}
@@ -15,8 +15,8 @@
 			<h1>{{- .Title }}</h1>
 			{{- .Summary }}
 		{{- else }}
-			<h1>{{ site.Params.huggingsite.error404.title }}</h1>
-			<p>{{- site.Params.huggingsite.error404.summary | .RenderString }}</p>
+			<h1>{{ or site.Params.huggingsite.error404.title hugo.Data.huggingsite.error404.title }}</h1>
+			<p>{{- or site.Params.huggingsite.error404.summary hugo.Data.huggingsite.error404.summary | .RenderString }}</p>
 		{{- end }}
 	</div>
 </section>
@@ -25,13 +25,12 @@
 		{{ .ContentWithoutSummary }}
 	</section>
 {{- end }}
+{{ range hugo.Deps }}{{- warnf "%s" (debug.Dump .) }}{{- end }}
 {{- end }}
-{{ define "footer-left" }}
-{{ with site.GetPage "/error-404" }}
-	{{- with .GitInfo }}
-		{{- warnf "ERR: %s" .Hash }}
-	{{- end }}
+
+{{- define "footer-left" }}
+{{- with site.GetPage "/error-404" }}
+	<p>{{- partial "f/print-page-date.html" . }}</p>
 {{- end }}
-<!-- no left footer -->
 {{- end }}
 {{- /**/ -}}

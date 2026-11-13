@@ -1,16 +1,16 @@
-{{- $storageKey := default "huggingsite-theme" site.Params.huggingsite.storageKey }}
+{{- $BrowserLocalStorageKey := default "huggingsite-theme" site.Params.BrowserLocalStorageKey }}
 <script>
   (function() {
-  var stored = window.localStorage?.getItem({{ $storageKey }});
+  var stored = window.localStorage?.getItem({{ $BrowserLocalStorageKey }});
   var preferred = window.matchMedia?.("(prefers-color-scheme: dark)").matches ? "dark" : "light";
   document.documentElement.dataset.theme = stored || preferred;
   document.documentElement.dataset.themeAuto = stored ? "false" : "true";
   })();
 </script>
-{{- $params := dict "storageKey" $storageKey }}
+{{- $params := dict "BrowserLocalStorageKey" $BrowserLocalStorageKey }}
 {{- $themeTogglePath := "js/theme-toggle.js" }}
 {{- with resources.Get $themeTogglePath }}
-	{{- with . | js.Build (dict "params" (dict "storageKey" $storageKey)) }}
+	{{- with . | js.Build (dict "params" $params) }}
       <script type="module" src="{{ .RelPermalink }}" defer></script>
 	{{- else }}
 		{{- warnf "js.Build failed for %s" $themeTogglePath }}

@@ -1,0 +1,20 @@
+{{- $lastmod := .Page.Lastmod.Format "2006-01-02 15:04" }}
+{{- $lastmodWithoutTime := .Page.Lastmod.Format "2006-01-02" }}
+
+{{- $created := "" }}
+{{- with .GitInfo }}
+	{{- with index (.Ancestors | last 1) 0 }}
+		{{- $created = .AuthorDate.Format "2006-01-02" }}
+	{{- else }}
+		{{- $created = .AuthorDate.Format "2006-01-02" }}
+	{{- end }}
+{{- else with .Date }}
+	{{- $created = .Format "2006-01-02" }}
+{{- end }}
+
+{{- if or (eq $lastmodWithoutTime $created) (eq $created "") (eq $created "0001-01-01") }}
+	{{- $lastmod -}}
+{{- else }}
+	{{- $created }} &#8594; {{ $lastmod }}
+{{- end }}
+{{- /**/ -}}

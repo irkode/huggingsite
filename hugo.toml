@@ -6,8 +6,8 @@ title = "HuggingSite"
    title       = "Oops no page title set"
 
    [params.huggingsite]
-      # maybe a map here if we need more browser storage stuff
-      storageKey = "huggingsite-theme"
+      # if we need more stuff for Browser/JS maybe convert to a map
+      browserLocalStorageKey = "huggingsite-theme"
 
       [params.huggingsite.error404]
          title   = "404 Page not found"
@@ -25,17 +25,22 @@ title = "HuggingSite"
 
          [params.huggingsite.layoutImages.error]
             overlay = "img/error-overlay.png"
+            scale   = "192x192"
 
          [params.huggingsite.layoutImages.logo]
             scale = "48x48"
 
          [params.huggingsite.layoutImages.about]
+            scale = "192x"
 
          [params.huggingsite.layoutImages.home]
+            scale = "192x192"
 
          [params.huggingsite.layoutImages.page]
+            scale = "128x128"
 
          [params.huggingsite.layoutImages.section]
+            scale = "192x192"
 
          [params.huggingsite.layoutImages.og]
             scale = "440x440"
@@ -61,6 +66,10 @@ title = "HuggingSite"
       noClasses = false
       style     = "monokai"
 
+[frontmatter]
+   date    = ["date"]
+   lastmod = [":git", "lastmod"]
+
 [[cascade]]
    [cascade.build]
       list             = "local"
@@ -80,5 +89,4 @@ title = "HuggingSite"
 
 [module]
    [module.hugoVersion]
-      extended = false
-      min      = "0.169.0"
+      min = "0.169.0"

@@ -1,5 +1,5 @@
-{{ $tag := or site.Params.Tag "unreleased" }}
-{{ $buildDate := or site.Params.BuildDate (time.Now.Format "2006-01-02") }}
+{{- $tag := or site.Params.Tag "unreleased" }}
+{{- $buildDate := or site.Params.BuildDate (time.Now.Format "2006-01-02") }}
 <!doctype html>
 <html lang="{{ site.Language.Locale }}" dir="{{ or site.Language.Direction `ltr` }}">
 	<head>
@@ -48,24 +48,7 @@
 		<footer class="site-footer">
 			<div class="footer-left">
 				{{- block "footer-left" . }}
-					<p>
-						{{- with .Date }}
-							{{- .Format "2006-01-02" }}
-							&#8594;
-						{{- else with .GitInfo }}
-							{{ with index (.Ancestors | last 1) 0 }}
-								{{- .AuthorDate.Format "2006-01-02" }}
-								&#8594;
-							{{- end }}
-						{{- end }}
-						{{- with .GitInfo }}
-							<a href="{{ printf "%scommit/%s" (site.Params.huggingsite.urls.repo) .Hash }}" aria-label="View commit {{ .AbbreviatedHash }} on GitHub">
-								{{ $.Lastmod.Format "2006-01-02 15:04" }}
-							</a>
-						{{- else }}
-							{{ $.Lastmod.Format "2006-01-02 15:04" }}
-						{{ end }}
-					</p>
+					<p>{{- partial "f/print-page-date.html" . }}</p>
 				{{- end }}
 			</div>
 			<div class="footer-center">
