@@ -1,18 +1,23 @@
 {{- $lastmod := .Page.Lastmod.Format "2006-01-02 15:04" }}
 {{- $lastmodWithoutTime := .Page.Lastmod.Format "2006-01-02" }}
-
+{{- if not (.Page.Param "huggingsite.printModificationDateWithTime") }}
+	{{- $lastmod = $lastmodWithoutTime }}
+{{- end }}
 {{- $created := "" }}
 {{- with .GitInfo }}
-	{{- with index (.Ancestors | last 1) 0 }}
-		{{- $created = .AuthorDate.Format "2006-01-02" }}
+	{{- if ge (len .Ancestors) 0 }}
+		{{- with index (.Ancestors | last 1) 0 }}
+			{{- $created = .AuthorDate.Format "2006-01-02" }}
+		{{- end }}
 	{{- else }}
-		{{- $created = .AuthorDate.Format "2006-01-02" }}
+		{{- $created = $lastmod }}
 	{{- end }}
 {{- else with .Date }}
 	{{- $created = .Format "2006-01-02" }}
+	{{- $lastmod = $created }}
 {{- end }}
 
-{{- if or (eq $lastmodWithoutTime $created) (eq $created "") (eq $created "0001-01-01") }}
+{{- if or (eq $lastmodWithoutTime $created) (eq $created "") (not $created) }}
 	{{- $lastmod -}}
 {{- else }}
 	{{- $created }} &#8594; {{ $lastmod }}
