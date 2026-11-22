@@ -30,7 +30,7 @@
 
 {{- define "footer-left" }}
 {{- with site.GetPage "/error-404" }}
-	<p>{{- partial "f/print-page-date.html" . }}</p>
+	<p>{{- partialCached "f/print-page-date.html" . .Path }}</p>
 {{- end }}
 {{- end }}
 {{- /**/ -}}

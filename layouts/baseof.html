@@ -12,7 +12,7 @@
 			{{- end -}}
 		</title>
 	</head>
-	<body{{ if not (in (slice "home" "404") .Kind) }} class="no-hl_img-mobile"{{ end }}>
+	<body{{ if not (in (slice "home" "404") .Kind) }} class="no-headline-image"{{ end }}>
 		<a class="skip-link" href="#main-content">Skip to main content</a>
 		<header class="site-header">
 			<div class="header-left">
@@ -48,7 +48,7 @@
 		<footer class="site-footer">
 			<div class="footer-left">
 				{{- block "footer-left" . }}
-					<p>{{- partial "f/print-page-date.html" . }}</p>
+					<p>{{- partialCached "f/print-page-date.html" . . }}</p>
 				{{- end }}
 			</div>
 			<div class="footer-center">
