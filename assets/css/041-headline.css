@@ -92,11 +92,11 @@
       height: auto;
    }
 
-   body.no-hl_img-mobile .headline img {
+   body.no-headline-image .headline img {
       display: none;
    }
 
-   body.no-hl_img-mobile .headline.banner {
+   body.no-headline-image .headline.banner {
       align-items: flex-start;
    }
 }
