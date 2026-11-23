@@ -1,7 +1,7 @@
-import * as huggingsiteParams from '@params';
+import * as params from '@params';
 
-const browserLocalStorageKey = huggingsiteParams.browserLocalStorageKey;
 const toggleTheme = () => {
+   const storageKey = params.browserLocalStorageKey
    const html = document.documentElement;
    const preferred = window.matchMedia?.("(prefers-color-scheme: dark)").matches ? "dark" : "light";
    const opposite = preferred === "dark" ? "light" : "dark";
@@ -26,15 +26,15 @@ const toggleTheme = () => {
    }
 
    if (nextAuto) {
-      window.localStorage?.removeItem(browserLocalStorageKey);
+      window.localStorage?.removeItem(storageKey);
    } else {
-      window.localStorage?.setItem(browserLocalStorageKey, nextScheme);
+      window.localStorage?.setItem(storageKey, nextScheme);
    }
 
 
    html.dataset.theme = nextScheme;
    html.dataset.themeAuto = String(nextAuto);
-   nextAuto && (nextScheme === preferred) ? window.localStorage?.removeItem(browserLocalStorageKey) : window.localStorage?.setItem(browserLocalStorageKey, nextScheme);
+   nextAuto && (nextScheme === preferred) ? window.localStorage?.removeItem(storageKey) : window.localStorage?.setItem(storageKey, nextScheme);
 };
 document.getElementById("theme-toggle")?.addEventListener("click", (e) => {
    e.preventDefault();
