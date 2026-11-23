@@ -1,0 +1,56 @@
+[huggingsite]
+   # if we need more stuff for Browser/JS maybe convert to a map
+   browserLocalStorageKey        = "huggingsite-theme"
+   printModificationDateWithTime = true
+
+   [huggingsite.error404]
+      title   = "404 Page not found"
+      summary = """A lost user arrives in dismay,  
+                      For your own 404's gone astray.  
+                      To keep tempers at zero,  
+                      Be your site's helpful hero:  
+                      Make a custom page showing the way!"""
+
+   [huggingsite.layoutImages]
+      [huggingsite.layoutImages.default]
+         image   = "img/site.png"
+         overlay = "img/site-overlay.png"
+         scale   = "220x220"
+
+      [huggingsite.layoutImages.error]
+         overlay = "img/error-overlay.png"
+         scale   = "192x192"
+
+      [huggingsite.layoutImages.logo]
+         scale = "48x48"
+
+      [huggingsite.layoutImages.about]
+         scale = "192x"
+
+      [huggingsite.layoutImages.home]
+         scale = "192x192"
+
+      [huggingsite.layoutImages.page]
+         scale = "128x128"
+
+      [huggingsite.layoutImages.section]
+         scale = "192x192"
+
+      [huggingsite.layoutImages.og]
+         scale = "440x440"
+
+   [huggingsite.urls]
+      repo = "https://github.com/irkode/huggingsite"
+
+   [huggingsite.markup.highlight]
+      # one of: follow, toggle, dark, light
+      schemeMode = "follow"
+      # [huggingsite.markup]
+      # enableHighlightJS = true
+      # chromaStyle       = "monokai"
+      # language fallback settings
+      #  language        a language chroma can render
+      #  hljs            autodetect with highlightjs
+      # hljs-pass-language   pass language to highlightjs
+      # fallbackEmpty   = "hljs"
+      # fallbackUnknown = "hljs-hugo-html"
