@@ -33,4 +33,4 @@ title = "HuggingSite"
 
 [module]
    [module.hugoVersion]
-      min = "0.169.0"
+      min = "0.170.1"
